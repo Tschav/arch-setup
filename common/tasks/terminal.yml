@@ -1,0 +1,16 @@
+- name: install packages
+  pacman:
+   name:
+    - alacritty
+    - fish
+
+- name: create folder
+  ansible.builtin.file:
+   path: "$HOME/.config/alacritty"
+   state: directory
+   mode: '0755'
+
+- name: change config
+  copy:
+   src: "{{ playbook_dir }}/files/alacritty.toml"
+   dest: "$HOME/.config/alacritty/alacritty.toml"

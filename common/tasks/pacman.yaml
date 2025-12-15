@@ -1,0 +1,5 @@
+- name: Enable colorized output
+  replace:
+   path: /etc/pacman.conf
+   regexp: '^#Color$'
+   replace: 'Color'

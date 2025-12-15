@@ -1,0 +1,35 @@
+- name: Sync Cache
+  pacman:
+   update_cache: yes
+  register: updateresult
+
+#- name: print sys cach update result
+#  debug:
+#   msg:
+#    - "{{ updateresult.stdout_lines }}"
+
+- name: Upgrade system
+  pacman:
+   upgrade: yes
+  register: upgraderesult
+
+#- name: print upgrade output
+#  debug:
+#   msg:
+#    - "{{ upgraderesult.msg }}"
+
+# Init file path
+- name: Make sure .config exists
+  ansible.builtin.file:
+   path: $HOME/.config
+   state: directory
+   mode: '0755'
+
+# Pacman config
+- include_tasks: pacman.yaml
+
+# Install core apps
+- include_tasks: apps.yml
+
+# Install terminal and config
+- include_tasks: terminal.yml
