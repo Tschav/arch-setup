@@ -1,5 +1,5 @@
 - name: Sync Cache
-  pacman:
+  ansible.builtin.pacman:
    update_cache: yes
   register: updateresult
 
@@ -9,7 +9,7 @@
 #    - "{{ updateresult.stdout_lines }}"
 
 - name: Upgrade system
-  pacman:
+  ansible.builtin.pacman:
    upgrade: yes
   register: upgraderesult
 
@@ -33,3 +33,6 @@
 
 # Install terminal and config
 - include_tasks: terminal.yml
+
+# Configure lightdm
+- include_tasks: lightdm.yml

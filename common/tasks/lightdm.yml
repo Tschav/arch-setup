@@ -1,0 +1,25 @@
+# Make sure service for lightdm is available and registered
+- name: DPM service file
+  stat:
+    path: "/usr/lib/systemd/system/lightdm.service"
+  register: dpm_file_path
+
+- name: Check if service file is available
+  fail: msg="Service file not found"
+  when: not dpm_file_path.stat.exists
+
+- stat: path=/etc/systemd/system/display-manager.service
+  register: dpm_service
+
+- name: Create symlink for service
+  ansible.builtin.file:
+    src: "{{ dpm_service }}"
+    dest: "{{ dpm_file_path }}"
+  when: dpm_service.stat.islnk is not defined or not dpm_service.stat.islnk
+
+# Customize configuration
+- name: Numlock on
+  replace:
+   path: /etc/lightdm/lightdm.conf
+   regexp: '^#greeter-setup-script=/usr/bin/numlockx on$'
+   replace: 'greeter-setup-script=/usr/bin/numlockx on'

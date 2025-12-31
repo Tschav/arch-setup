@@ -12,7 +12,8 @@
     - lightdm
     - mumble
     - nemo
-    - nvidia
+    - numlockx
+    - nvidia-open
     - pulseaudio
     - steam
     - vlc
